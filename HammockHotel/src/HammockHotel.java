@@ -215,7 +215,7 @@ public class HammockHotel {
      * @return true if there are absolutely no guests in the hotel and false otherwise.
      */
     public boolean isEmpty() {
-        // return variable
+        // return variable initialized to false
         boolean isEmpty = false;
         // for loop to iterate through the rooms
         for (int i = 0; i < rooms.length-1; i++) {
@@ -236,38 +236,29 @@ public class HammockHotel {
      * @return String array with the names of all the guest.
      */
     public String[] toArray() {
-        // array to return
+        // index of the current room
+        int index = 0;
+        // array to return ( make as many spots as there are people (a.k.a. usage) )
         String[] guestNames = new String[usage];
         // first available position for guestNames
         int counter = 0;
-        // array for peopleInRoom
-        int[] array = this.stats();
-        // for loop to iterate through all rooms
-        for (int i = 0; i < rooms.length-1; i++) {
-            // Node of hammocks within current room
-            Node hammocks = this.rooms[i];
-            // if the current hammock is not null
-            if (hammocks != null) {
-                // int for peopleInRoom
-                int peopleInRoom = array[i];
-                // while there are people in the room left to be checked
-                while (peopleInRoom > 0) {
-                    // if the current person's name exists
-                    if (hammocks.data != null) {
-                        // place the current person's name at the first available position in guestNames
-                        guestNames[counter] = hammocks.data;
-                        // put the next person's name in the current hammock for next time
-                        hammocks = hammocks.next;
-                        // decrease peopleInRoom
-                        peopleInRoom--;
-                        // increase first available position for guestNames
-                        counter++;
-                    } else {
-                        peopleInRoom = 0;
-                    }
-                }
+        // while loop to iterate through all rooms
+        while (index < rooms.length) {
+            // Node of hammocks in the current room
+            Node hammock = this.rooms[index];
+            // while hammock is not empty
+            while (hammock != null) {
+                // put guest name in guestNames first available index
+                guestNames[counter] = hammock.data;
+                // increase first available index
+                counter++;
+                // make next person up next
+                hammock = hammock.next;
             }
+            // increase index to the next room
+            index++;
         }
+        // return the array
         return guestNames;
     }  // method toArray
 
@@ -302,20 +293,19 @@ public class HammockHotel {
      * @return int array with how many guests are in each room
      */
     public int[] stats() {
-        // index
-        int i = 0;
+        // index of the current room
+        int index = 0;
         // array to return
         int[] stats = new int[rooms.length];
         // for loop to iterate through rooms
-        while (i < rooms.length) {
+        while (index < rooms.length) {
             // a node of hammocks within the room
-            Node hammocks = this.rooms[i];
+            Node hammocks = this.rooms[index];
             // if the room is completely empty
             if (hammocks == null) {
-                // go to next room
-                stats[i] = 0;
-                // if room is not empty
-            } else {
+                // put 0 people in current array spot
+                stats[index] = 0;
+            } else { // if room is not empty
                 // counter
                 int counter = 0;
                 // while there are people in the room
@@ -326,12 +316,15 @@ public class HammockHotel {
                     hammocks = hammocks.next;
                 }
                 // put number of guests in array
-                stats[i] = counter;
+                stats[index] = counter;
                 // next room
             }
-            i++;
+            // increase index to the next room
+            index++;
         }
+        // return array
         return stats;
     }  // method stats
+
 
 }  // class HammockHotel
