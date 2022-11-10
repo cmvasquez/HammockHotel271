@@ -218,7 +218,7 @@ public class HammockHotel {
         // return variable initialized to false
         boolean isEmpty = false;
         // for loop to iterate through the rooms
-        for (int i = 0; i < rooms.length-1; i++) {
+        for (int i = 0; i < rooms.length; i++) {
             // if statement to check if current room is empty
             if (this.rooms[i] != null) {
                 // change boolean to true
@@ -270,7 +270,7 @@ public class HammockHotel {
         // call stats() to get number of people in each room
         int[] array = this.stats();
         // for loop to iterate through rooms
-        for (int i = 0; i < rooms.length-1; i++) {
+        for (int i = 0; i < rooms.length; i++) {
             // Node of hammocks in the room
             Node hammocks = this.rooms[i];
             // number of people in current room
